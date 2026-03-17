@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MessageTransformService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transaction-event-processor</a> &gt; <a href="index.source.html" class="el_package">com.harpreetsaund.transactioneventprocessor.service</a> &gt; <span class="el_source">MessageTransformService.java</span></div><h1>MessageTransformService.java</h1><pre class="source lang-java linenums">package com.harpreetsaund.transactioneventprocessor.service;
+
+import com.harpreetsaund.transaction.avro.EodTransactionEvent;
+import com.harpreetsaund.transaction.avro.TransactionEvent;
+import com.harpreetsaund.transactioneventprocessor.mapper.TransactionMapper;
+import com.harpreetsaund.transactioneventprocessor.model.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.integration.annotation.Transformer;
+import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.Message;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MessageTransformService {
+
+<span class="fc" id="L17">    private static final Logger logger = LoggerFactory.getLogger(MessageTransformService.class);</span>
+
+    private final TransactionMapper transactionMapper;
+
+<span class="fc" id="L21">    public MessageTransformService(TransactionMapper transactionMapper) {</span>
+<span class="fc" id="L22">        this.transactionMapper = transactionMapper;</span>
+<span class="fc" id="L23">    }</span>
+
+    @Transformer
+    public Message&lt;Transaction&gt; eodTransactionEventToTransaction(Message&lt;EodTransactionEvent&gt; inboundMessage) {
+<span class="fc" id="L27">        logger.debug(&quot;Transforming EodTransactionEvent to Transaction entity: {}&quot;, inboundMessage);</span>
+
+<span class="fc" id="L29">        EodTransactionEvent eodTransactionEvent = inboundMessage.getPayload();</span>
+<span class="fc" id="L30">        Transaction transaction = transactionMapper.toTransactionEntity(eodTransactionEvent);</span>
+
+<span class="fc" id="L32">        return MessageBuilder.withPayload(transaction).copyHeaders(inboundMessage.getHeaders()).build();</span>
+    }
+
+    @Transformer
+    public Message&lt;Transaction&gt; transactionEventToTransaction(Message&lt;TransactionEvent&gt; inboundMessage) {
+<span class="fc" id="L37">        logger.debug(&quot;Transforming TransactionEvent to Transaction entity: {}&quot;, inboundMessage);</span>
+
+<span class="fc" id="L39">        TransactionEvent transactionEvent = inboundMessage.getPayload();</span>
+<span class="fc" id="L40">        Transaction transaction = transactionMapper.toTransactionEntity(transactionEvent);</span>
+
+<span class="fc" id="L42">        return MessageBuilder.withPayload(transaction).copyHeaders(inboundMessage.getHeaders()).build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
