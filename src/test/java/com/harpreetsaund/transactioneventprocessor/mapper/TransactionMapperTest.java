@@ -45,13 +45,24 @@ class TransactionMapperTest {
         Channel channel = Channel.POS;
         Instant transactionTimestampMs = Instant.now();
 
-        EventHeaders headers = EventHeaders.newBuilder().setEventId(eventId).setSourceSystem(sourceSystem)
-                .setTopicName(topicName).setEventType("TRANSACTION").setEventTimestamp(Instant.now())
-                .setPayloadSchemaVersion("1.0").build();
+        EventHeaders headers = EventHeaders.newBuilder()
+                .setEventId(eventId)
+                .setSourceSystem(sourceSystem)
+                .setTopicName(topicName)
+                .setEventType("TRANSACTION")
+                .setEventTimestamp(Instant.now())
+                .setPayloadSchemaVersion("1.0")
+                .build();
 
-        EventPayload payload = EventPayload.newBuilder().setTransactionId(transactionId).setAccountNumber(accountNumber)
-                .setTransactionType(transactionType).setAmount(amount).setCurrency(currency)
-                .setMerchantName(merchantName).setChannel(channel).setTransactionTimestamp(transactionTimestampMs)
+        EventPayload payload = EventPayload.newBuilder()
+                .setTransactionId(transactionId)
+                .setAccountNumber(accountNumber)
+                .setTransactionType(transactionType)
+                .setAmount(amount)
+                .setCurrency(currency)
+                .setMerchantName(merchantName)
+                .setChannel(channel)
+                .setTransactionTimestamp(transactionTimestampMs)
                 .build();
 
         TransactionEvent event = TransactionEvent.newBuilder().setHeaders(headers).setPayload(payload).build();
@@ -89,13 +100,24 @@ class TransactionMapperTest {
         Channel channel = Channel.ONLINE;
         Instant transactionTimestampMs = Instant.now();
 
-        EventHeaders headers = EventHeaders.newBuilder().setEventId(eventId).setSourceSystem(sourceSystem)
-                .setTopicName(topicName).setEventType("EOD_TRANSACTION").setEventTimestamp(Instant.now())
-                .setPayloadSchemaVersion("1.0").build();
+        EventHeaders headers = EventHeaders.newBuilder()
+                .setEventId(eventId)
+                .setSourceSystem(sourceSystem)
+                .setTopicName(topicName)
+                .setEventType("EOD_TRANSACTION")
+                .setEventTimestamp(Instant.now())
+                .setPayloadSchemaVersion("1.0")
+                .build();
 
-        EventPayload payload = EventPayload.newBuilder().setTransactionId(transactionId).setAccountNumber(accountNumber)
-                .setTransactionType(transactionType).setAmount(amount).setCurrency(currency)
-                .setMerchantName(merchantName).setChannel(channel).setTransactionTimestamp(transactionTimestampMs)
+        EventPayload payload = EventPayload.newBuilder()
+                .setTransactionId(transactionId)
+                .setAccountNumber(accountNumber)
+                .setTransactionType(transactionType)
+                .setAmount(amount)
+                .setCurrency(currency)
+                .setMerchantName(merchantName)
+                .setChannel(channel)
+                .setTransactionTimestamp(transactionTimestampMs)
                 .build();
 
         EodTransactionEvent event = EodTransactionEvent.newBuilder().setHeaders(headers).setPayload(payload).build();
@@ -121,13 +143,25 @@ class TransactionMapperTest {
     @DisplayName("Should handle null merchantName in TransactionEvent")
     void testToTransactionEntityWithNullMerchantName() {
         // Arrange
-        EventHeaders headers = EventHeaders.newBuilder().setEventId("evt-null-merchant").setSourceSystem("FILE")
-                .setTopicName("test-topic").setEventType("TRANSACTION").setEventTimestamp(Instant.now())
-                .setPayloadSchemaVersion("1.0").build();
+        EventHeaders headers = EventHeaders.newBuilder()
+                .setEventId("evt-null-merchant")
+                .setSourceSystem("FILE")
+                .setTopicName("test-topic")
+                .setEventType("TRANSACTION")
+                .setEventTimestamp(Instant.now())
+                .setPayloadSchemaVersion("1.0")
+                .build();
 
-        EventPayload payload = EventPayload.newBuilder().setTransactionId("txn-null").setAccountNumber("ACC-999")
-                .setTransactionType(TransactionType.DEBIT).setAmount(50.0).setCurrency(Currency.CAD)
-                .setMerchantName(null).setChannel(Channel.ATM).setTransactionTimestamp(Instant.now()).build();
+        EventPayload payload = EventPayload.newBuilder()
+                .setTransactionId("txn-null")
+                .setAccountNumber("ACC-999")
+                .setTransactionType(TransactionType.DEBIT)
+                .setAmount(50.0)
+                .setCurrency(Currency.CAD)
+                .setMerchantName(null)
+                .setChannel(Channel.ATM)
+                .setTransactionTimestamp(Instant.now())
+                .build();
 
         TransactionEvent event = TransactionEvent.newBuilder().setHeaders(headers).setPayload(payload).build();
 
@@ -168,13 +202,25 @@ class TransactionMapperTest {
 
     private void testTransactionTypeMapping(TransactionType type) {
         Instant timestamp = Instant.now();
-        EventHeaders headers = EventHeaders.newBuilder().setEventId("evt-type-test").setSourceSystem("FILE")
-                .setTopicName("test-topic").setEventType("TRANSACTION").setEventTimestamp(Instant.now())
-                .setPayloadSchemaVersion("1.0").build();
+        EventHeaders headers = EventHeaders.newBuilder()
+                .setEventId("evt-type-test")
+                .setSourceSystem("FILE")
+                .setTopicName("test-topic")
+                .setEventType("TRANSACTION")
+                .setEventTimestamp(Instant.now())
+                .setPayloadSchemaVersion("1.0")
+                .build();
 
-        EventPayload payload = EventPayload.newBuilder().setTransactionId("txn-type").setAccountNumber("ACC-001")
-                .setTransactionType(type).setAmount(100.0).setCurrency(Currency.CAD).setMerchantName("Test")
-                .setChannel(Channel.ONLINE).setTransactionTimestamp(timestamp).build();
+        EventPayload payload = EventPayload.newBuilder()
+                .setTransactionId("txn-type")
+                .setAccountNumber("ACC-001")
+                .setTransactionType(type)
+                .setAmount(100.0)
+                .setCurrency(Currency.CAD)
+                .setMerchantName("Test")
+                .setChannel(Channel.ONLINE)
+                .setTransactionTimestamp(timestamp)
+                .build();
 
         TransactionEvent event = TransactionEvent.newBuilder().setHeaders(headers).setPayload(payload).build();
 
@@ -185,13 +231,25 @@ class TransactionMapperTest {
 
     private void testCurrencyMapping(Currency currency) {
         Instant timestamp = Instant.now();
-        EventHeaders headers = EventHeaders.newBuilder().setEventId("evt-currency-test").setSourceSystem("FILE")
-                .setTopicName("test-topic").setEventType("TRANSACTION").setEventTimestamp(Instant.now())
-                .setPayloadSchemaVersion("1.0").build();
+        EventHeaders headers = EventHeaders.newBuilder()
+                .setEventId("evt-currency-test")
+                .setSourceSystem("FILE")
+                .setTopicName("test-topic")
+                .setEventType("TRANSACTION")
+                .setEventTimestamp(Instant.now())
+                .setPayloadSchemaVersion("1.0")
+                .build();
 
-        EventPayload payload = EventPayload.newBuilder().setTransactionId("txn-currency").setAccountNumber("ACC-001")
-                .setTransactionType(TransactionType.DEBIT).setAmount(100.0).setCurrency(currency)
-                .setMerchantName("Test").setChannel(Channel.ONLINE).setTransactionTimestamp(timestamp).build();
+        EventPayload payload = EventPayload.newBuilder()
+                .setTransactionId("txn-currency")
+                .setAccountNumber("ACC-001")
+                .setTransactionType(TransactionType.DEBIT)
+                .setAmount(100.0)
+                .setCurrency(currency)
+                .setMerchantName("Test")
+                .setChannel(Channel.ONLINE)
+                .setTransactionTimestamp(timestamp)
+                .build();
 
         TransactionEvent event = TransactionEvent.newBuilder().setHeaders(headers).setPayload(payload).build();
 
@@ -202,13 +260,25 @@ class TransactionMapperTest {
 
     private void testChannelMapping(Channel channel) {
         Instant timestamp = Instant.now();
-        EventHeaders headers = EventHeaders.newBuilder().setEventId("evt-channel-test").setSourceSystem("FILE")
-                .setTopicName("test-topic").setEventType("TRANSACTION").setEventTimestamp(Instant.now())
-                .setPayloadSchemaVersion("1.0").build();
+        EventHeaders headers = EventHeaders.newBuilder()
+                .setEventId("evt-channel-test")
+                .setSourceSystem("FILE")
+                .setTopicName("test-topic")
+                .setEventType("TRANSACTION")
+                .setEventTimestamp(Instant.now())
+                .setPayloadSchemaVersion("1.0")
+                .build();
 
-        EventPayload payload = EventPayload.newBuilder().setTransactionId("txn-channel").setAccountNumber("ACC-001")
-                .setTransactionType(TransactionType.DEBIT).setAmount(100.0).setCurrency(Currency.CAD)
-                .setMerchantName("Test").setChannel(channel).setTransactionTimestamp(timestamp).build();
+        EventPayload payload = EventPayload.newBuilder()
+                .setTransactionId("txn-channel")
+                .setAccountNumber("ACC-001")
+                .setTransactionType(TransactionType.DEBIT)
+                .setAmount(100.0)
+                .setCurrency(Currency.CAD)
+                .setMerchantName("Test")
+                .setChannel(channel)
+                .setTransactionTimestamp(timestamp)
+                .build();
 
         TransactionEvent event = TransactionEvent.newBuilder().setHeaders(headers).setPayload(payload).build();
 

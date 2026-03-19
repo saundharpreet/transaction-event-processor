@@ -29,7 +29,8 @@ public class OutboundChannelConfig implements InitializingBean {
                 .handle(Jpa.outboundAdapter(entityManagerFactory) //
                         .entityClass(Transaction.class) //
                         .persistMode(PersistMode.PERSIST), spec -> spec.transactional(true))
-                .log(LoggingHandler.Level.DEBUG).get();
+                .log(LoggingHandler.Level.DEBUG)
+                .get();
     }
 
     @Override

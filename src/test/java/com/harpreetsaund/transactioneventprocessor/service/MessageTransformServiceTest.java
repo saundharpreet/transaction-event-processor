@@ -47,7 +47,8 @@ class MessageTransformServiceTest {
         // Arrange
         EodTransactionEvent eodEvent = createEodTransactionEvent();
         Message<EodTransactionEvent> inboundMessage = MessageBuilder.withPayload(eodEvent)
-                .setHeader("test-header", "test-value").build();
+                .setHeader("test-header", "test-value")
+                .build();
 
         Transaction expectedTransaction = createTransaction();
         when(transactionMapper.toTransactionEntity(eodEvent)).thenReturn(expectedTransaction);
@@ -87,7 +88,10 @@ class MessageTransformServiceTest {
         // Arrange
         EodTransactionEvent eodEvent = createEodTransactionEvent();
         Message<EodTransactionEvent> inboundMessage = MessageBuilder.withPayload(eodEvent)
-                .setHeader("header1", "value1").setHeader("header2", "value2").setHeader("header3", 123).build();
+                .setHeader("header1", "value1")
+                .setHeader("header2", "value2")
+                .setHeader("header3", 123)
+                .build();
 
         Transaction expectedTransaction = createTransaction();
         when(transactionMapper.toTransactionEntity(eodEvent)).thenReturn(expectedTransaction);
@@ -141,26 +145,49 @@ class MessageTransformServiceTest {
 
     private EodTransactionEvent createEodTransactionEvent() {
         Instant timestamp = Instant.now();
-        EventHeaders headers = EventHeaders.newBuilder().setEventId("eod-evt-001").setSourceSystem("FILE")
-                .setTopicName("eod-topic").setEventType("EOD_TRANSACTION").setEventTimestamp(timestamp)
-                .setPayloadSchemaVersion("1.0").build();
+        EventHeaders headers = EventHeaders.newBuilder()
+                .setEventId("eod-evt-001")
+                .setSourceSystem("FILE")
+                .setTopicName("eod-topic")
+                .setEventType("EOD_TRANSACTION")
+                .setEventTimestamp(timestamp)
+                .setPayloadSchemaVersion("1.0")
+                .build();
 
-        EventPayload payload = EventPayload.newBuilder().setTransactionId("txn-eod-001").setAccountNumber("ACC-12345")
-                .setTransactionType(TransactionType.DEBIT).setAmount(100.50).setCurrency(Currency.CAD)
-                .setMerchantName("Test Merchant").setChannel(Channel.POS).setTransactionTimestamp(timestamp).build();
+        EventPayload payload = EventPayload.newBuilder()
+                .setTransactionId("txn-eod-001")
+                .setAccountNumber("ACC-12345")
+                .setTransactionType(TransactionType.DEBIT)
+                .setAmount(100.50)
+                .setCurrency(Currency.CAD)
+                .setMerchantName("Test Merchant")
+                .setChannel(Channel.POS)
+                .setTransactionTimestamp(timestamp)
+                .build();
 
         return EodTransactionEvent.newBuilder().setHeaders(headers).setPayload(payload).build();
     }
 
     private TransactionEvent createTransactionEvent() {
         Instant timestamp = Instant.now();
-        EventHeaders headers = EventHeaders.newBuilder().setEventId("evt-001").setSourceSystem("MQ")
-                .setTopicName("transaction-topic").setEventType("TRANSACTION").setEventTimestamp(timestamp)
-                .setPayloadSchemaVersion("1.0").build();
+        EventHeaders headers = EventHeaders.newBuilder()
+                .setEventId("evt-001")
+                .setSourceSystem("MQ")
+                .setTopicName("transaction-topic")
+                .setEventType("TRANSACTION")
+                .setEventTimestamp(timestamp)
+                .setPayloadSchemaVersion("1.0")
+                .build();
 
-        EventPayload payload = EventPayload.newBuilder().setTransactionId("txn-001").setAccountNumber("ACC-54321")
-                .setTransactionType(TransactionType.CREDIT).setAmount(250.75).setCurrency(Currency.USD)
-                .setMerchantName("Online Merchant").setChannel(Channel.ONLINE).setTransactionTimestamp(timestamp)
+        EventPayload payload = EventPayload.newBuilder()
+                .setTransactionId("txn-001")
+                .setAccountNumber("ACC-54321")
+                .setTransactionType(TransactionType.CREDIT)
+                .setAmount(250.75)
+                .setCurrency(Currency.USD)
+                .setMerchantName("Online Merchant")
+                .setChannel(Channel.ONLINE)
+                .setTransactionTimestamp(timestamp)
                 .build();
 
         return TransactionEvent.newBuilder().setHeaders(headers).setPayload(payload).build();
